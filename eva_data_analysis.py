@@ -20,12 +20,27 @@ def read_json_to_dataframe(input_file):
 
 
 def write_dataframe_to_csv(df, output_file):
+    """
+    Save dataframe to CSV file for later analysis
+
+    Args:
+        df: A dataframe
+        output_file: An output file (csv)
+    """
     print(f'Saving to CSV file {output_file}')
-    # Save dataframe to CSV file for later analysis
+    # 
     df.to_csv(output_file, index=False, encoding='utf-8')
 
 
 def plot_cumulative_time_in_space(eva_data, graph_file):
+    """
+    Plot spacewalk duration over time (years)
+
+    Args:
+        eva_data: A data frame
+        graph_file: A graph file name
+
+    """
     print(f'Plotting cumulative spacewalk duration and saving to {graph_file}')
     eva_data['duration_hours'] = eva_data['duration'].str.split(":").apply(lambda x: int(x[0]) + int(x[1])/60)
     eva_data['cumulative_time'] = eva_data['duration_hours'].cumsum()
