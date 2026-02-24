@@ -1,0 +1,63 @@
+import json
+import csv
+import datetime as dt
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# https://data.nasa.gov/resource/eva.json (with modifications)
+input_file = open('./eva-data.json', 'r', encoding='ascii')
+output_file = open('./eva-data.csv','w', encoding='utf-8')
+graph_file = './cumulative_eva_graph.png'
+
+# Fieldnames in input json file - NOT USED!
+#fieldnames = ("EVA #", "Country", "Crew    ", "Vehicle", "Date", "Duration", "Purpose")
+
+# Initialise output file
+data=[]
+
+for i in range(375):
+    line=input_file.readline()
+    print(line)
+    data.append(json.loads(line[1:-1]))
+#data.pop(0)
+## Comment out this bit if you don't want the spreadsheet
+
+csv_writer=csv.writer(output_file)
+
+time = []
+date =[]
+
+j=0
+for i in data:
+    print(data[j])
+    # and this bit
+    csv_writer.writerow(data[j].values())
+    if 'duration' in data[j].keys():
+        duration_str=data[j]['duration']
+        if duration_str == '':
+            pass
+        else:
+            duration_dt=dt.datetime.strptime(duration_str,'%H:%M')
+            duration_hrs = dt.timedelta(hours=duration_dt.hour, minutes=duration_dt.minute, seconds=duration_dt.second).total_seconds()/(60*60)
+            print(duration_dt,duration_hrs)
+            time.append(duration_hrs)
+            if 'date' in data[j].keys():
+                date.append(dt.datetime.strptime(data[j]['date'][0:10], '%Y-%m-%d'))
+                #date.append(data[j]['date'][0:10])
+
+            else:
+                time.pop(0)
+    j+=1
+
+t=[0]
+for i in time:
+    t.append(t[-1]+i)
+
+date,time = zip(*sorted(zip(date, time)))
+
+plt.plot(date,t[1:], 'ko-')
+plt.xlabel('Year')
+plt.ylabel('Total time spent in space to date (hours)')
+plt.tight_layout()
+plt.savefig(graph_file)
+plt.show()
