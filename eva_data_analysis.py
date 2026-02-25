@@ -4,7 +4,7 @@ import sys # In-built Python library
 import re
 
 # MAIN code
-def main(input_file, output_file,graph_file):
+def main(input_file, output_file, duration_by_astronaut_output_file, graph_file):
     print("--START--")
     # Read the data from JSON file
     df = read_json_to_dataframe(input_file)
@@ -14,6 +14,12 @@ def main(input_file, output_file,graph_file):
 
     # Convert and export data to CSV file
     write_dataframe_to_csv(df, output_file)
+
+    # Calculate summary table for total EVA per astronaut
+    duration_by_astronaut_df = summary_duration_by_astronaut(df)
+    
+    # Save summary duration data by each astronaut to CSV file
+    write_dataframe_to_csv(duration_by_astronaut_df, duration_by_astronaut_output_file)
 
     # Sort dataframe by date ready to be plotted (date values are on x-axis)
     df.sort_values('date', inplace=True)
@@ -143,6 +149,26 @@ def plot_cumulative_time_in_space(df, graph_file):
     plt.show()
 
 
+    
+def summary_duration_by_astronaut(df):
+    """
+    Summarise the duration data by each astronaut and saves resulting table to a CSV file
+
+    Args: 
+        df (pd.DataFrame): Input dataframe to be summarised
+ 
+    Returns:
+        sum_by_astro (pd.DataFrame): Data frame with a row for each astronaut and a summarised column 
+    """
+    print(f'Calculating summary of total EVA time by astronaut')
+    subset = df.loc[:,['crew', 'duration']] # subset to work with only relevant columns
+    subset = add_duration_hours(subset) # need duration_hours for easier calcs
+    subset = subset.drop('duration', axis=1) # dropping the extra 'duration' column as it contains string values not suitable for calulations
+    subset = subset.groupby('crew').sum() 
+    return subset
+    
+
+
 if __name__ == "__main__":
     # perform some actions before calling main
 
@@ -157,5 +183,7 @@ if __name__ == "__main__":
 
 
     graph_file = './results/cumulative_eva_graph.png'
+    duration_by_astronaut_output_file = 'results/duration_by_astronaut.csv'
 
-    main(input_file,output_file,graph_file)
+
+    main(input_file,output_file,duration_by_astronaut_output_file,graph_file)
