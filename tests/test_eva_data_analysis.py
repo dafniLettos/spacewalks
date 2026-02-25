@@ -26,22 +26,36 @@ def test_text_to_duration_float():
 #test_text_to_duration_integer()
 #test_text_to_duration_float()
 
-def test_calculate_crew_size():
+#def test_calculate_crew_size():
+#    """
+#    Test that calculate_crew_size returns expected size for typical crew values
+#    """
+#    actual_result = calculate_crew_size("Dafni Lettos;")
+#    expected_result = 1
+#    assert actual_result == expected_result
+
+#    actual_result = calculate_crew_size("Dafni Lettos; Alex Taylor;")
+#    expected_result = 2
+#    assert actual_result == expected_result
+
+
+#def test_calculate_crew_size_edge_cases():
+#    """
+#    Test that calculate_crew_size returns expected size for atypical crew values (edge case were crew is empty string)
+#    """
+#    actual_result = calculate_crew_size("")
+#    assert actual_result == None
+
+
+@pytest.mark.parametrize("input_value, expected_result", [
+    ("Dafni Lettos;", 1),
+    ("Dafni Lettos; Alex Taylor;",2),
+    ("", None)
+])
+def test_calculate_crew_size(input_value, expected_result):
     """
-    Test that calculate_crew_size returns expected size for typical crew values
+    Test that calculate_crew_size returns expected size forcrew values
     """
-    actual_result = calculate_crew_size("Dafni Lettos;")
-    expected_result = 1
+    actual_result = calculate_crew_size(input_value) 
     assert actual_result == expected_result
-
-    actual_result = calculate_crew_size("Dafni Lettos; Alex Taylor;")
-    expected_result = 2
-    assert actual_result == expected_result
-
-
-def test_calculate_crew_size_edge_cases():
-    """
-    Test that calculate_crew_size returns expected size for atypical crew values (edge case were crew is empty string)
-    """
-    actual_result = calculate_crew_size("")
-    assert actual_result == None
+    

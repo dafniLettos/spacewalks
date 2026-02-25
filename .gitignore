@@ -1,8 +1,10 @@
 venv_spacewalks/
 notes/
-old_scripts/
+old/
+htmlcov/
 __pycache__
 .vscode
+.coverage
 **/.DS_Store
 *.png
 *.csv
