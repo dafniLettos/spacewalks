@@ -2,6 +2,7 @@ venv_spacewalks/
 notes/
 old_scripts/
 __pycache__
+.vscode
 **/.DS_Store
 *.png
 *.csv
