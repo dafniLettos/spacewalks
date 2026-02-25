@@ -6,5 +6,3 @@ __pycache__
 .vscode
 .coverage
 **/.DS_Store
-*.png
-*.csv
