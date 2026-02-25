@@ -1,6 +1,6 @@
 venv_spacewalks/
+__pycache__
 **/.DS_Store
 *.png
 *.csv
-VM_Notes.txt
-Tests_Notes.txt
+*_Notes.txt
