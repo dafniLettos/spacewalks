@@ -1,4 +1,6 @@
 venv_spacewalks/
 **/.DS_Store
 *.png
+*.csv
 VM_Notes.txt
+Tests_Notes.txt
