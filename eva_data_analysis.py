@@ -126,7 +126,7 @@ def plot_cumulative_time_in_space(df, graph_file):
     Plot spacewalk duration over time (years)
 
     Args:
-        eva_data: A data frame
+        df: A data frame
         graph_file: A graph file name
 
     Returns:
