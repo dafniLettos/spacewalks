@@ -35,7 +35,7 @@ cd spacewalks
 `source venv_spacewalks/bin/activate`
 
 - Install the necessary dependencies:
-`python3 -m pip install pandas==2.2.2 matplotlib==3.8.4 numpy==2.0.0 pytest==7.4.2`
+`python3 -m pip install requirements.txt`
 
 - To ensure everything is working correctly, run the tests using pytest.
 `python3 -m pytest`
